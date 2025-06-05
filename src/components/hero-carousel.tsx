@@ -88,7 +88,7 @@ export default function HeroCarousel() {
     ((page % heroSlides.length) + heroSlides.length) % heroSlides.length;
 
   return (
-    <section className="relative pt-24 md:pt-32 pb-16 md:pb-20 px-4 md:px-6 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden">
+    <section className="relative pt-32 md:pt-40 pb-24 md:pb-32 px-4 md:px-6 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden">
       <div className="max-w-6xl mx-auto relative">
         {/* Carousel Container */}
         <div className="relative h-[400px] md:h-[500px] flex items-center justify-center">
