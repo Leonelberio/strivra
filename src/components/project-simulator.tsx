@@ -18,8 +18,9 @@ import {
   CheckCircle,
   Clock,
   Sparkles,
+  Trash2,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import QuoteModal from "@/components/quote-modal";
 
 const projectTypes = [
@@ -107,6 +108,60 @@ export default function ProjectSimulator() {
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedType = localStorage.getItem("strivra-simulator-type");
+      const savedFeatures = localStorage.getItem("strivra-simulator-features");
+
+      if (savedType) {
+        setSelectedType(savedType);
+      }
+
+      if (savedFeatures) {
+        try {
+          const features = JSON.parse(savedFeatures);
+          if (Array.isArray(features)) {
+            setSelectedFeatures(features);
+          }
+        } catch (error) {
+          console.error("Error parsing saved features:", error);
+        }
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (selectedType) {
+        localStorage.setItem("strivra-simulator-type", selectedType);
+      } else {
+        localStorage.removeItem("strivra-simulator-type");
+      }
+    }
+  }, [selectedType]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (selectedFeatures.length > 0) {
+        localStorage.setItem(
+          "strivra-simulator-features",
+          JSON.stringify(selectedFeatures)
+        );
+      } else {
+        localStorage.removeItem("strivra-simulator-features");
+      }
+    }
+  }, [selectedFeatures]);
+
+  const clearSimulator = () => {
+    setSelectedType("");
+    setSelectedFeatures([]);
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("strivra-simulator-type");
+      localStorage.removeItem("strivra-simulator-features");
+    }
+  };
+
   const calculateTotal = () => {
     const typePrice =
       projectTypes.find((type) => type.id === selectedType)?.basePrice || 0;
@@ -160,6 +215,18 @@ export default function ProjectSimulator() {
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Estimez le coût et la durée de votre projet IT en quelques clics
           </p>
+
+          {/* Add auto-save indicator */}
+          {(selectedType || selectedFeatures.length > 0) && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-6 flex items-center justify-center gap-2 text-sm text-green-600 bg-green-50 px-4 py-2 rounded-none border border-green-200"
+            >
+              <CheckCircle className="h-4 w-4" />
+              <span>Vos sélections sont automatiquement sauvegardées</span>
+            </motion.div>
+          )}
         </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-8">
@@ -372,6 +439,15 @@ export default function ProjectSimulator() {
                       >
                         Demander un devis détaillé
                         <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+
+                      <Button
+                        variant="outline"
+                        className="w-full border-white/30 text-white hover:bg-white/20 rounded-none h-10"
+                        onClick={clearSimulator}
+                      >
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        Recommencer
                       </Button>
 
                       <p className="text-xs text-blue-100 text-center">

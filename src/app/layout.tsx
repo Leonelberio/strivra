@@ -3,6 +3,8 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import LoadingBar from "@/components/loading-bar";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "STRIVRA - Solutions IT & Transformation Digitale | Togo",
@@ -68,7 +70,9 @@ export default function RootLayout({
     <html lang="fr" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <body className="font-sans antialiased" suppressHydrationWarning={true}>
         <LoadingBar />
-        {children}
+        <Header />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
