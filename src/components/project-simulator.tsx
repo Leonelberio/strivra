@@ -443,7 +443,7 @@ export default function ProjectSimulator() {
 
                       <Button
                         variant="outline"
-                        className="w-full border-white/30 text-white hover:bg-white/20 rounded-none h-10"
+                        className="w-full border-white/30 text-blue-600 hover:bg-white/20 rounded-none h-10"
                         onClick={clearSimulator}
                       >
                         <Trash2 className="mr-2 h-4 w-4" />

@@ -303,7 +303,7 @@ export default function HomeClientPage() {
               <Link href="/projets">
                 <Button
                   variant="outline"
-                  className="px-12 py-4 text-lg rounded-none h-14 border-white text-white hover:bg-white hover:text-gray-900"
+                  className="px-12 py-4 text-lg rounded-none h-14 border-white text-gray-600 hover:bg-white hover:text-gray-900"
                 >
                   Voir Nos Réalisations
                 </Button>
